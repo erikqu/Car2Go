@@ -19,27 +19,26 @@ print ("Any numbers that come up are error codes.")
 ###read ME
 ### constraints to be added in later....
 
-cleantables = 0
+cleantables = 1
 if cleantables:
-    cursor.execute('''CREATE OR REPLACE FUNCTION drop_all ()
-   RETURNS VOID  AS
-   $$
-   DECLARE rec RECORD;
-   BEGIN
-       -- Get all the schemas
-        FOR rec IN
-        select distinct schemaname
-         from pg_catalog.pg_tables
-         -- You can exclude the schema which you don't want to drop by adding another condition here
-         where schemaname not like 'pg_catalog'
-           LOOP
-             EXECUTE 'DROP SCHEMA ' || rec.schemaname || ' CASCADE';
-           END LOOP;
-           RETURN;
-       END;
-       $$ LANGUAGE plpgsql;
+    command = '''
+                drop table "Model_parts";
+                drop table "Plants";
+                drop table "Options";
+                drop table "Customers";
+                drop table "Models";
+                drop table "Suppliers";
+                drop table "Supply";
+                drop table "Plant_supply";
+                drop table "Order" ;
+                drop table "Parts";
+                drop table "Brands";
+                drop table "Dealers";
+                drop table "Vehicles";
 
-    select drop_all();''')
+                '''
+    cursor.execute(command)
+    conn.commit()
 
 try:
     command = '''CREATE TABLE "Model_parts" (
@@ -48,6 +47,7 @@ try:
                 );
                 '''
     cursor.execute(command)
+    conn.commit()
 except:
     "Model_parts failed! This is the first table.  Clean tables?"
 
@@ -113,7 +113,7 @@ command=            '''
               "model_name" varchar(20),
               PRIMARY KEY ("sid")
             );'''
-
+cursor.execute(command)
 command=            '''
             CREATE TABLE "Supply" (
               "sid" char(4),
@@ -172,9 +172,10 @@ try:
               "did" char(4),
               PRIMARY KEY ("vin")
             );'''
+    cursor.execute(command)
 except:
     print("Vehicles Failed!")
 
-cursor.execute(command)
+
 #this line commits the actual schema!
 conn.commit()
