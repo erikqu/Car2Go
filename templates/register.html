@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <title>Register</title>
 </head>
+<h1>Registration Form </h1>
 <body>
-    <form action="{{ url_for('registered') }}" method="post">
-    <h2>Enter your name</h2>
-    <input type="text" name="name">
-    <h2>Enter your email</h2>
-    <input type="text" name="email">
+    <form action="{{ url_for('register') }}" method="POST">
+    <h2>Enter your Name</h2>
+    <input type="text" name='name'>
+    <h2>Enter your Address</h2>
+    <input type="text" name="address">
+	<h2>Enter your Phone</h2>
+	<input type="text" name="phone">
+	<h2>Enter your Gender</h2>
+	<input type="text" name="gender">
+	<h2>Enter your Income</h2>
+	<input type="text" name="income">
     <input type="submit">
 </body>
 </html>

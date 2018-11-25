@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Index</title>
+    </head>
+	<h2>GM DATABASE ENTRY PORTAL</H2>
+    <body>
+        <form action="{{ url_for('account') }}" method="post">
+			Full Name: <br>
+            <input type="text" name="name">
+			<br>
+			CID: 
+			<br>
+			<input type="text" name = "cid">
+        <input type="submit">
+			<br>
+            <a href="{{ url_for('register') }}">SIGN UP!</a>
+    </form>
+    </body>
+</html>
