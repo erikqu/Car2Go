@@ -6,10 +6,10 @@ import pprint
 enter the correct info and I can define the schema for ya
 '''
 
-dbname = 'project'
+dbname = 'postgres'
 host = 'localhost'
 user = 'postgres'
-password = 'root'
+password = 'postgres'
 conn = psycopg2.connect(host=host, dbname = dbname, user = user, password = password)
 cursor = conn.cursor()
 print ("Connected to " + dbname + "!")
