@@ -158,7 +158,8 @@ command=            '''CREATE TABLE "Dealers" (
               "max_cars" int,
               "current_cars" int,
               "total_sold" int,
-              PRIMARY KEY ("did")
+              PRIMARY KEY ("did"),
+			  check (current_cars <= max_cars)
             );'''
 cursor.execute(command)
 try:
