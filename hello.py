@@ -6,7 +6,7 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
 
 app=Flask(__name__)
-
+global empdid
 @app.route('/')
 def indexLogin():
     return render_template('index.html')
@@ -24,7 +24,7 @@ def indexLogin_POST():
 		command = '''select * from "Customers" where "name"='%s' and "cid"='%s';'''%(name,cid)
 		cur.execute(command)
 		if cur.rowcount is not 0:
-			return redirect(url_for('account'))
+			return redirect(url_for('account', name=name))
 		else:
 			print("Login Failed!")
 			return render_template('index.html')
@@ -63,14 +63,52 @@ def register_post():
 @app.route('/registered')
 def registered():
 	return render_template("registered.html")
-	
+
 @app.route('/account')
-def account():
-	return render_template('account.html')
+@app.route('/account/<name>')
+def account(name=None):
+	return render_template('account.html', name=name)
 	
 @app.route('/employeelogin')
 def employeelogin():
 	return render_template('employeelogin.html')
+	
+@app.route('/employeelogin', methods=['POST'])
+def employeelogin_POST():
+	try:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		cur = conn.cursor()
+		dealer = request.form['name']
+		did = request.form['did']
+		#print('''select * from "Dealers" where "dealer_name"='%s' and "did"='%s';'''%(dealer,did))
+		command = '''select * from "Dealers" where "dealer_name"='%s' and "did"='%s';'''%(dealer,did)
+		cur.execute(command)
+		if cur.rowcount is not 0:
+			global empdid
+			empdid = did
+			return redirect(url_for('employeeaccount', name=dealer))
+		else:
+			print("Login Failed!")
+			return render_template('employeelogin.html')
+	except:
+		conn.rollback()
+		print("Failed to login!")
+		return render_template('employeelogin.html')
+		
+		
+@app.route('/employeeaccount')
+@app.route('/employeeaccount/<name>')
+def employeeaccount(name=None):
+	cars = None 
+	#print(name)
+	if name != None: 
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		cur = conn.cursor()
+		comm = ''' select brand_name, model_name, current_cars from "Dealers" where "dealer_name"='%s';'''%(name)
+		cur.execute(comm) 
+		cars = cur.fetchall()
+		#print (cars)
+	return render_template('employeeaccount.html', name=name, cars = cars)
 
 @app.route('/purchasehistory', methods=['POST'])
 def purchasehistory():
