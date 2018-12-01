@@ -31,8 +31,8 @@ CREATE TABLE "Customers" (
 
 CREATE TABLE "Models" (
   "mid" char(4),
-  "name" varchar(20),
-  "brand" varchar(20),
+  "model_name" varchar(20),
+  "brand_name" varchar(20),
   "style" varchar(10),
   "bid" char(4),
   PRIMARY KEY ("mid")
@@ -70,22 +70,19 @@ CREATE INDEX "FK" ON  "Order" ("did", "cid", "vin");
 
 CREATE TABLE "Parts" (
   "partId" char(4),
-  "name" varchar(20),
-  "sid" char(4),
+  "part_name" varchar(20),
   PRIMARY KEY ("partId")
 );
 
-CREATE INDEX "FK" ON  "Parts" ("sid");
-
 CREATE TABLE "Brands" (
   "bid" char(4),
-  "name" varchar(10),
+  "brand_name" varchar(20),
   PRIMARY KEY ("bid")
 );
 
 CREATE TABLE "Dealers" (
   "did" char(4),
-  "name" varchar(20),
+  "dealer_name" varchar(20),
   "date" date,
   "brand_name" varchar(10),
   "model_name" varchar(10),

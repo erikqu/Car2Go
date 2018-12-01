@@ -71,3 +71,19 @@ def account():
 @app.route('/employeelogin')
 def employeelogin():
 	return render_template('employeelogin.html')
+
+@app.route('/purchasehistory', methods=['POST'])
+def purchasehistory():
+	try:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		cur = conn.cursor()
+		name = request.form['name']
+		cid = request.form['cid']
+		command = '''select "color", brand_name", "model_name" from "Customers" natural join "Order" natural join "Vehicles" natural join "Brands" natural join "Models" natural join "Options" where "name"='%s' and "cid"='%s';'''%(name,cid)
+		cur.execute(command)
+		conn.commit()
+	except:
+		conn.rollback()
+		print("No purchase history")
+	return render_template("purchasehistory.html")
+

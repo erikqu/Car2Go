@@ -87,10 +87,10 @@ command = '''
 cursor.execute(command)
 
 command = '''
-			insert into "Parts" values ('9001', 'Motor', '3001');
-			insert into "Parts" values ('9002', 'Transmission', '3001');
-			insert into "Parts" values ('9003', 'Transmission', '3002');
-			insert into "Parts" values ('9004', 'Motor', '3003');
+			insert into "Parts" values ('9001', 'Motor');
+			insert into "Parts" values ('9002', 'Transmission');
+			insert into "Parts" values ('9003', 'Transmission');
+			insert into "Parts" values ('9004', 'Motor');
 			'''
 cursor.execute(command)
 

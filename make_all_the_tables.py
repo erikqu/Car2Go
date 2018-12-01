@@ -53,7 +53,7 @@ except:
 
 try:
     command = '''CREATE TABLE "Plants" (
-                  "pid" char(4),
+                  "pid" char(4) NOT NULL,
                   "model_name" varchar(20),
                   PRIMARY KEY ("pid")
                 ); '''
@@ -64,7 +64,7 @@ except:
 try:
     command =    '''
             CREATE TABLE "Options" (
-              "oid" char(4),
+              "oid" char(4) NOT NULL,
               "color" varchar(10),
               "engine" varchar(10),
               "transmission" varchar(10),
@@ -78,7 +78,7 @@ try:
 
     command=    '''
                 CREATE TABLE "Customers" (
-                  "cid" char(4),
+                  "cid" char(4) NOT NULL,
                   "name" varchar(30),
                   "address" varchar(30),
                   "phone" char(10),
@@ -93,11 +93,11 @@ except:
 try:
     command=            '''
                 CREATE TABLE "Models" (
-                  "mid" char(4),
-                  "name" varchar(20),
-                  "brand" varchar(20),
+                  "mid" char(4) NOT NULL,
+                  "model_name" varchar(20),
+                  "brand_name" varchar(20),
                   "style" varchar(10),
-                  "bid" char(4),
+                  "bid" char(4) NOT NULL,
                   PRIMARY KEY ("mid")
                 );
                 '''
@@ -109,47 +109,46 @@ except:
 
 command=            '''
             CREATE TABLE "Suppliers" (
-              "sid" char(4),
+              "sid" char(4) NOT NULL,
               "model_name" varchar(20),
               PRIMARY KEY ("sid")
             );'''
 cursor.execute(command)
 command=            '''
             CREATE TABLE "Supply" (
-              "sid" char(4),
-              "partId" char(4)
+              "sid" char(4) NOT NULL,
+              "partId" char(4) NOT NULL
             );'''
 cursor.execute(command)
 command=            '''
             CREATE TABLE "Plant_supply" (
-              "pid" char(4),
-              "partId" char(4)
+              "pid" char(4) NOT NULL,
+              "partId" char(4) NOT NULL
             );'''
 
 cursor.execute(command)
 command=            '''CREATE TABLE "Order" (
-              "did" char(4),
-              "cid" char(4),
-              "vin" varchar(17)
+              "did" char(4) NOT NULL,
+              "cid" char(4) NOT NULL,
+              "vin" varchar(17) NOT NULL
             );'''
 cursor.execute(command)
 command=            '''CREATE TABLE "Parts" (
-              "partId" char(4),
-              "name" varchar(20),
-              "sid" char(4),
+              "partId" char(4) NOT NULL,
+              "part_name" varchar(20),
               PRIMARY KEY ("partId")
             );'''
 cursor.execute(command)
 
 command=            '''CREATE TABLE "Brands" (
-              "bid" char(4),
-              "name" varchar(10),
+              "bid" char(4) NOT NULL,
+              "brand_name" varchar(20),
               PRIMARY KEY ("bid")
             );'''
 cursor.execute(command)
 command=            '''CREATE TABLE "Dealers" (
-              "did" char(4),
-              "name" varchar(20),
+              "did" char(4) NOT NULL,
+              "dealer_name" varchar(20),
               "date" date,
               "brand_name" varchar(10),
               "model_name" varchar(10),
@@ -165,11 +164,11 @@ cursor.execute(command)
 try:
     command =       '''
             CREATE TABLE "Vehicles" (
-              "vin" varchar(17),
+              "vin" varchar(17) NOT NULL,
               "pid" char(4),
-              "oid" char(4),
-              "bid" char(4),
-              "mid" char(4),
+              "oid" char(4) NOT NULL,
+              "bid" char(4) NOT NULL,
+              "mid" char(4) NOT NULL,
               "did" char(4),
               PRIMARY KEY ("vin")
             );'''
