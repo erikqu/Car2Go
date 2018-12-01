@@ -6,7 +6,7 @@ import pprint
 enter the correct info and I can define the schema for ya
 '''
 
-dbname = 'postgres'
+dbname = 'project'
 host = 'localhost'
 user = 'postgres'
 password = 'root'
@@ -179,3 +179,4 @@ except:
 
 #this line commits the actual schema!
 conn.commit()
+print ("Done!")
