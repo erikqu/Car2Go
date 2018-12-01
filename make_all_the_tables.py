@@ -9,7 +9,7 @@ enter the correct info and I can define the schema for ya
 dbname = 'postgres'
 host = 'localhost'
 user = 'postgres'
-password = 'postgres'
+password = 'root'
 conn = psycopg2.connect(host=host, dbname = dbname, user = user, password = password)
 cursor = conn.cursor()
 print ("Connected to " + dbname + "!")
