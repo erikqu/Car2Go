@@ -1,6 +1,11 @@
 <!doctype html>
 <html>
-    <body>
+	<head>
+		<link rel="stylesheet" href="{{url_for('static', filename='css/normalize.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/mainpage.css')}}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	</head>
+	<body>
 		<h1> {{name}} Inventory</h1>
 		<h1>INVENTORY</h1>
 		{% if cars %}

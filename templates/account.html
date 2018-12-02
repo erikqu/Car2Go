@@ -1,5 +1,10 @@
 <!doctype html>
 <html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/normalize.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/mainpage.css')}}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
     <body>
 		<p> This is the login page for {{name}} with cid {{cid}}</p>
 		<a href="{{ url_for('purchasehistory', name=name, cid=cid) }}">Purchase History</a>
