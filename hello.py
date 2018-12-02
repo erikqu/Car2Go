@@ -142,6 +142,10 @@ def employeeaccount_post(name=None):
 			return render_template('employeeaccount.html', name=name, cars = cars, updatefail=False)
 			
 	except:
+		conn.rollback()
+		comm = ''' select brand_name, model_name, current_cars from "Dealers" where "dealer_name"='%s';'''%(name)
+		cur.execute(comm) 
+		cars = cur.fetchall()
 		return render_template('employeeaccount.html', name=name, cars = cars, updatefail=True)
 
 
