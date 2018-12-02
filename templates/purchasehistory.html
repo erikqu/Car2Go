@@ -6,20 +6,12 @@
 </head>
 <h1>Purchase History </h1>
 <body>
-    <form action="{{ url_for('purchasehistory') }}">
-    <h2>Enter your Name</h2>
-    <input type="text" name='name'>
-    <h2>Enter customer ID (cid)</h2>
-    <input type="text" name="cid">
-    <input type="submit">
-    {% for row in cur %}
-    	<tr>
-    		{% for i in row %}
-    			<td>
-    				{{ str( i) }}
-    			</td>
-    		{% endfor %}
-    	</tr>
-    {% endfor %}
+    {% if history %}
+    <ul>
+    	{% for row in history %}
+    		<li> {{ row }} </li>
+    	{% endfor %}
+    </ul>
+    {% endif %}
 </body>
 </html>

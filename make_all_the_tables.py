@@ -30,7 +30,7 @@ if cleantables:
                 drop table "Suppliers";
                 drop table "Supply";
                 drop table "Plant_supply";
-                drop table "Order" ;
+                drop table "Orders" ;
                 drop table "Parts";
                 drop table "Brands";
                 drop table "Dealers";
@@ -127,7 +127,7 @@ command=            '''
             );'''
 
 cursor.execute(command)
-command=            '''CREATE TABLE "Order" (
+command=            '''CREATE TABLE "Orders" (
               "did" char(4) NOT NULL,
               "cid" char(4) NOT NULL,
               "vin" varchar(17) NOT NULL

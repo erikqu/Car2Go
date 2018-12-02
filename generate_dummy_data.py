@@ -80,9 +80,9 @@ command = '''
 cursor.execute(command)
 
 command = '''
-			insert into "Order" values ('0010', '2001', 'WAUFFAFM3CA000000');
-			insert into "Order" values ('0012', '2002', 'FAHJBVCALEIQ90019');
-			insert into "Order" values ('0011', '2003', 'POQJJA023NKVLNVO3');
+			insert into "Orders" values ('0010', '2001', 'WAUFFAFM3CA000000');
+			insert into "Orders" values ('0012', '2002', 'FAHJBVCALEIQ90019');
+			insert into "Orders" values ('0011', '2003', 'POQJJA023NKVLNVO3');
 			'''
 cursor.execute(command)
 
@@ -111,7 +111,7 @@ command = '''
 cursor.execute(command)
 
 command = '''
-			insert into "Vehicles" values ('WAUFFAFM3CA000000', '5001', '9001', '0001', '6473', '0010');
+			insert into "Vehicles" values ('WAUFFAFM3CA000000', '5001', '9001', '0001', '6743', '0010');
 			insert into "Vehicles" values ('FAHJBVCALEIQ90019', '5002', '9005', '0004', '6745', '0012');
 			insert into "Vehicles" values ('POQJJA023NKVLNVO3', '5003', '9004', '0002', '6744', '0011');
 			'''

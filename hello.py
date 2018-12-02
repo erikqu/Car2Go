@@ -24,7 +24,7 @@ def indexLogin_POST():
 		command = '''select * from "Customers" where "name"='%s' and "cid"='%s';'''%(name,cid)
 		cur.execute(command)
 		if cur.rowcount is not 0:
-			return redirect(url_for('account', name=name))
+			return redirect(url_for('account', name=name, cid=cid))
 		else:
 			print("Login Failed!")
 			return render_template('index.html')
@@ -65,9 +65,9 @@ def registered():
 	return render_template("registered.html")
 
 @app.route('/account')
-@app.route('/account/<name>')
-def account(name=None):
-	return render_template('account.html', name=name)
+@app.route('/account/<name>/<cid>')
+def account(name=None, cid=None):
+	return render_template('account.html', name=name, cid=cid)
 	
 @app.route('/employeelogin')
 def employeelogin():
@@ -110,21 +110,18 @@ def employeeaccount(name=None):
 		#print (cars)
 	return render_template('employeeaccount.html', name=name, cars = cars)
 
-@app.route('/purchasehistory')
-def purchasehistory():
-	try:
+@app.route('/purchasehistory/<name>/<cid>')
+def purchasehistory(name=None, cid=None):
+	if name != None and cid != None:
 		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
 		cur = conn.cursor()
-		name = request.form['name']
-		cid = request.form['cid']
-		command = '''select "color", brand_name", "model_name", "price" 
-		from "Customers" natural join "Order" natural join "Vehicles" natural join "Brands" natural join "Models" natural join "Options" 
+		#name = request.form['name']
+		#cid = request.form['cid']
+		command = '''select "color", "brand_name", "model_name", "price" 
+		from "Customers" natural join "Orders" natural join "Vehicles" natural join "Dealers"
 		where "name"='%s' and "cid"='%s';'''%(name,cid)
-		tab="<table style='border:1px solid black'>"
+		#tab="<table style='border:1px solid black'>"
 		cur.execute(command)
-		conn.commit()
-	except:
-		conn.rollback()
-		print("No purchase history")
-	return render_template("purchasehistory.html", cursor=cur, table=tab)
+		history=cur.fetchall()
+	return render_template("purchasehistory.html", name=name, cid=cid, history=history)
 

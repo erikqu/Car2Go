@@ -60,13 +60,13 @@ CREATE TABLE "Plant_supply" (
 
 CREATE INDEX "FK" ON  "Plant_supply" ("pid", "partId");
 
-CREATE TABLE "Order" (
+CREATE TABLE "Orders" (
   "did" char(4),
   "cid" char(4),
   "vin" varchar(17)
 );
 
-CREATE INDEX "FK" ON  "Order" ("did", "cid", "vin");
+CREATE INDEX "FK" ON  "Orders" ("did", "cid", "vin");
 
 CREATE TABLE "Parts" (
   "partId" char(4),

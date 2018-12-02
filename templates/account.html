@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
     <body>
-		<p> This is the login page for {{name}}</p>
+		<p> This is the login page for {{name}} with cid {{cid}}</p>
+		<a href="{{ url_for('purchasehistory', name=name, cid=cid) }}">Purchase History</a>
 		
     </body>
 </html>
