@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <body>
-		<p> This is the login page for {{name}}!</p>
+		<h1> {{name}} INVENTORY PAGE!</h1>
 		<h1>INVENTORY</h1>
 		{% if cars %}
 		<ul>
@@ -12,7 +12,7 @@
 		{% endif %}
 		<h1> UPDATE INVENTORY </h1>
 		
-		<form action="{{ url_for('employeeaccount') }}" method="POST">
+		<form action="{{ url_for('employeeaccount',name=name) }}" method="POST">
 			Brand Name: <br>
             <input type="text" name="brand">
 			<br>
@@ -22,6 +22,8 @@
 			New amount: <br>
 			<input type="text" name = "current">
         <input type="submit">
-		
+		{% if updatefail %}
+		<h2>Could not update! Check maximum inventory allowed!</h2>		
+		{% endif %}
     </body>
 </html>
