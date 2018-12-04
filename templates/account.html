@@ -7,7 +7,11 @@
     </head>
     <body>
 		<p> This is the login page for {{name}} with cid {{cid}}</p>
-		<a href="{{ url_for('purchasehistory', name=name, cid=cid) }}">Purchase History</a>
+        <a href="{{ url_for('purchasehistory', name=name, cid=cid) }}">Purchase History</a>
+        <p> Choose the following links to update your account settings:</p>
+        <a href="{{ url_for('addressUpdate', cid=cid) }}">Update Your Address</a>
+        <a href="{{ url_for('salaryUpdate', cid=cid) }}">Update Your Salaly</a>
+		<a href="{{ url_for('phoneUpdate', cid=cid) }}">Update Your phone number</a>
 		
     </body>
 </html>

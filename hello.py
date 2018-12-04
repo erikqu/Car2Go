@@ -164,5 +164,37 @@ def purchasehistory(name=None, cid=None):
 		history=cur.fetchall()
 	return render_template("/templatespurchasehistory.html", name=name, cid=cid, history=history)
 
+@app.route('/phoneUpdate/<cid>',methods=['POST'])
+def phoneUpdate_post(cid=None):
+	if cid != None:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='sumanand'")
+		cur = conn.cursor()
+		phone = request.form['phone']
+		command = '''update "Customers" set "phone" = %s where "cid"=%s';'''%(phone,cid)
+	return render_template('account.html',name=None,cid=cid)
+
+@app.route('/addressUpdate/<cid>',methods=['POST'])
+def addressUpdate_post(cid=None):
+	if cid != None:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='sumanand'")
+		cur = conn.cursor()
+		address = request.form['address']
+		command = '''update "Customers" set "address" = %s where "cid"=%s';'''%(address,cid)
+			#tab="<table style='border:1px solid black'>"
+		cur.execute(command)
+	return render_template('account.html',name=None,cid=cid)
+
+
+@app.route('/salaryUpdate/<cid>',methods=['POST'])
+def salaryUpdate_post(cid=None):
+	if cid != None:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='sumanand'")
+		cur = conn.cursor()
+		salary = request.form['salary']
+		command = '''update "Customers" set "salary" = %s where "cid"=%s';'''%(salary,cid)
+			#tab="<table style='border:1px solid black'>"
+		cur.execute(command)
+	return render_template('account.html',name=None,cid=cid)
+
 if __name__ == "__main__":
 	app.run()
