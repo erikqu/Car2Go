@@ -139,7 +139,7 @@ command=            '''
 	    CREATE TABLE Plant_supply (
 			  pid char(4) NOT NULL,
 			  partId char(4) NOT NULL,
-			  PRIMARY KEY (pid, partId)
+			  PRIMARY KEY (pid, partId),
 			  FOREIGN KEY (pid) REFERENCES (Plants),
 			  FOREIGN KEY (partId) REFERENCES (Parts)
 			);
