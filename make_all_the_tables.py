@@ -19,7 +19,7 @@ print ("Any numbers that come up are error codes.")
 ###read ME
 ### constraints to be added in later....
 
-cleantables = 0
+cleantables = 1
 if cleantables:
     command = '''
                 drop table Orders;
