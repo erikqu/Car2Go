@@ -7,13 +7,16 @@
 	</head>
 	<body>
         <h1> Update your salary </h1>
-        <form action="{{ url_for('salaryUpdate',cid=cid) }}" method="POST">
-                New Salary: <br>
+        <form action="{{ url_for('salaryUpdate') }}" method="POST">
+                <h3>Enter New Salary</h3><br>
                 <input type="text" name = "salary">
+                <h3>Enter Your Cid</h3><br>
+                <input type="text" name = "cid">
             <input type="submit">
             {% if updatefail %}
             <h2>Could not update!</h2>		
             {% endif %}
+        </form>
         </body>
     </html>
     

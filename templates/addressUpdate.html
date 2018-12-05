@@ -7,13 +7,16 @@
 	</head>
 	<body>
         <h1> Update your address </h1>
-        <form action="{{ url_for('addressUpdate',cid = cid) }}" method="POST">
-                New address: <br>
+        <form action="{{ url_for('addressUpdate') }}" method="post">
+                <h1>Enter new address:</h1><br>
                 <input type="text" name = "address">
+                <h3>Enter Your Cid</h3><br>
+                <input type="text" name = "cid">
             <input type="submit">
             {% if updatefail %}
             <h2>Could not update!</h2>		
             {% endif %}
+        </form>
         </body>
     </html>
     
