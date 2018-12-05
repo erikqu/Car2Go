@@ -26,8 +26,8 @@ cursor = conn.cursor()
   check (current_cars <= max_cars)
 );'''
 command = '''
-			insert into "Dealers" values('0013', 'Bens Buick', '2017-03-14', 'Buick', 'Regal', 55000.00, 'red', 25,2,30);
-			insert into "Dealers" values('0014', 'Bens Buick', '2017-03-14', 'Buick', 'Lacrosse', 15000.00, 'red', 250,50,30);
+			insert into "Dealers" values('9000', 'Bens Buick', '2017-03-14', 'Buick', 'Regal', 55000.00, 'red', 25,2,30);
+			insert into "Dealers" values('9100', 'Bens Buick', '2017-03-14', 'Buick', 'Lacrosse', 15000.00, 'red', 250,50,30);
 			'''
 cursor.execute(command)
 conn.commit()
