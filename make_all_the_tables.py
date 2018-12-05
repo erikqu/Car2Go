@@ -157,7 +157,7 @@ command=            '''
 			  max_cars int,
 			  current_cars int,
 			  total_sold int,
-			  CHECK (current_cars <= max_cars)
+			  CHECK (current_cars <= max_cars),
 			  PRIMARY KEY (did)
 			);
 '''
