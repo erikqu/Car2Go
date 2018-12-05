@@ -6,7 +6,6 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
 
 app=Flask(__name__)
-global empdid
 @app.route('/')
 def indexLogin():
     return render_template('index.html')
@@ -15,7 +14,7 @@ def indexLogin():
 @app.route('/', methods=['POST'])
 def indexLogin_POST():
 	try:
-		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
 		cur = conn.cursor()
 		name = request.form['name']
 		cid = request.form['cid'] 
@@ -42,7 +41,7 @@ def register():
 def register_post():
 	try:
 		#print ("Registering!")
-		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
 		cur = conn.cursor()
 		name = request.form['name']
 		address = request.form['address']
@@ -58,11 +57,11 @@ def register_post():
 	except:
 		conn.rollback()
 		print("Cannot register!")
-	return render_template("registered.html")
+	return render_template("registered.html",cid=cid)
 
 @app.route('/registered')
-def registered():
-	return render_template("registered.html")
+def registered(name=None):
+	return render_template("/templatesregistered.html",name=name)
 
 @app.route('/account')
 @app.route('/account/<name>/<cid>')
@@ -76,7 +75,7 @@ def employeelogin():
 @app.route('/employeelogin', methods=['POST'])
 def employeelogin_POST():
 	try:
-		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
 		cur = conn.cursor()
 		dealer = request.form['name']
 		did = request.form['did']
@@ -84,9 +83,7 @@ def employeelogin_POST():
 		command = '''select * from "Dealers" where "dealer_name"='%s' and "did"='%s';'''%(dealer,did)
 		cur.execute(command)
 		if cur.rowcount is not 0:
-			global empdid
-			empdid = did
-			return redirect(url_for('employeeaccount', name=dealer))
+			return redirect(url_for('employeeaccount', name=dealer,updatefail=False))
 		else:
 			print("Login Failed!")
 			return render_template('employeelogin.html')
@@ -98,22 +95,64 @@ def employeelogin_POST():
 		
 @app.route('/employeeaccount')
 @app.route('/employeeaccount/<name>')
-def employeeaccount(name=None):
+def employeeaccount(name=None,updatefail=False):
 	cars = None 
 	#print(name)
 	if name != None: 
-		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
 		cur = conn.cursor()
 		comm = ''' select brand_name, model_name, current_cars from "Dealers" where "dealer_name"='%s';'''%(name)
 		cur.execute(comm) 
 		cars = cur.fetchall()
 		#print (cars)
-	return render_template('employeeaccount.html', name=name, cars = cars)
+	return render_template('employeeaccount.html', name=name, cars = cars,updatefail=updatefail)
+	
+@app.route('/employeeaccount/<name>',methods=['POST'])
+def employeeaccount_post(name=None):
+	try:
+		#fetch brand, model, and we name the dealer name so we can update....
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
+		cur = conn.cursor()
+		brand = request.form['brand']
+		model = request.form['model']
+		newcount = request.form['current']
+		#check if brand already in, if not then add the car.
+		#if the brand is already in the database then update the count. 
+		#have something to print if the new inventory is too large. 
+		com = '''select * from "Dealers" where "dealer_name"='%s' and "model_name"='%s' and "brand_name"='%s';'''%(name,model,brand)
+		cur.execute(com)
+		if cur.fetchall() !=[]:
+			#actually update inventory
+			com = '''update "Dealers" set "current_cars"=%s where "dealer_name"='%s' and "brand_name"='%s' and "model_name"='%s';'''%(newcount,name,brand,model)
+			cur.execute(com)
+			conn.commit()
+			comm = ''' select brand_name, model_name, current_cars from "Dealers" where "dealer_name"='%s';'''%(name)
+			cur.execute(comm) 
+			cars = cur.fetchall()
+			return render_template('employeeaccount.html', name=name, cars = cars, updatefail=False)
+		else:
+			#insert the vehicle into inventory
+			did = id_generator(size=4)
+			com = '''insert into "Dealers" values ('%s','%s',NULL,'%s','%s',NULL,NULL,500,%s,0);'''%(did,name,brand,model,newcount)
+			cur.execute(com)
+			conn.commit()
+			comm = ''' select brand_name, model_name, current_cars from "Dealers" where "dealer_name"='%s';'''%(name)
+			cur.execute(comm) 
+			cars = cur.fetchall()
+			return render_template('employeeaccount.html', name=name, cars = cars, updatefail=False)
+			
+	except:
+		conn.rollback()
+		comm = ''' select brand_name, model_name, current_cars from "Dealers" where "dealer_name"='%s';'''%(name)
+		cur.execute(comm) 
+		cars = cur.fetchall()
+		return render_template('employeeaccount.html', name=name, cars = cars, updatefail=True)
+
 
 @app.route('/purchasehistory/<name>/<cid>')
 def purchasehistory(name=None, cid=None):
 	if name != None and cid != None:
-		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
 		cur = conn.cursor()
 		#name = request.form['name']
 		#cid = request.form['cid']
@@ -123,5 +162,39 @@ def purchasehistory(name=None, cid=None):
 		#tab="<table style='border:1px solid black'>"
 		cur.execute(command)
 		history=cur.fetchall()
-	return render_template("purchasehistory.html", name=name, cid=cid, history=history)
+	return render_template("/purchasehistory.html", name=name, cid=cid, history=history)
 
+@app.route('/phoneUpdate/<cid>',methods=['POST'])
+def phoneUpdate(cid=None):
+	if cid != None:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
+		cur = conn.cursor()
+		phone = request.form['phone']
+		command = '''update "Customers" set "phone" = %s where "cid"=%s';'''%(phone,cid)
+	return render_template('account.html',name=None,cid=cid)
+
+@app.route('/addressUpdate/<cid>',methods=['POST'])
+def addressUpdate(cid=None):
+	if cid != None:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
+		cur = conn.cursor()
+		address = request.form['address']
+		command = '''update "Customers" set "address" = %s where "cid"=%s';'''%(address,cid)
+			#tab="<table style='border:1px solid black'>"
+		cur.execute(command)
+	return render_template('account.html',name=None,cid=cid)
+
+
+@app.route('/salaryUpdate/<cid>',methods=['POST'])
+def salaryUpdate(cid=None):
+	if cid != None:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='postgres'")
+		cur = conn.cursor()
+		salary = request.form['salary']
+		command = '''update "Customers" set "salary" = %s where "cid"=%s';'''%(salary,cid)
+			#tab="<table style='border:1px solid black'>"
+		cur.execute(command)
+	return render_template('account.html',name=None,cid=cid)
+
+if __name__ == "__main__":
+	app.run()

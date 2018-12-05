@@ -1,7 +1,12 @@
 <!doctype html>
 <html>
-    <body>
-		<p> This is the login page for {{name}}!</p>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/normalize.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	</head>
+	<body>
+		<h1> {{name}} Inventory</h1>
 		<h1>INVENTORY</h1>
 		{% if cars %}
 		<ul>
@@ -12,7 +17,7 @@
 		{% endif %}
 		<h1> UPDATE INVENTORY </h1>
 		
-		<form action="{{ url_for('employeeaccount') }}" method="POST">
+		<form action="{{ url_for('employeeaccount',name=name) }}" method="POST">
 			Brand Name: <br>
             <input type="text" name="brand">
 			<br>
@@ -22,6 +27,8 @@
 			New amount: <br>
 			<input type="text" name = "current">
         <input type="submit">
-		
+		{% if updatefail %}
+		<h2>Could not update! Check maximum inventory allowed!</h2>		
+		{% endif %}
     </body>
 </html>
