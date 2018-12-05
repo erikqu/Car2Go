@@ -171,7 +171,7 @@ def phoneUpdate(cid=None):
 	phone = request.form['phone']
 	cid = request.form['cid']
 	cid=int(cid)
-	command = '''update "Customers" set "phone" = '%s' where "cid"=%s;'''%(phone,cid)
+	command = '''update "Customers" set "phone" = '%s' where "cid"='%s';'''%(phone,cid)
 	cur.execute(command)
 	conn.commit()
 	return render_template('account.html', name=name, cid=cid)
@@ -203,7 +203,7 @@ def salaryUpdate():
 	salary=float(salary)
 	cid = request.form['cid']
 	cid=int(cid)
-	command = '''update "Customers" set "income" = '%s' where "cid"=%s;'''%(salary,cid)
+	command = '''update "Customers" set "income" = '%s' where "cid"='%s';'''%(salary,cid)
 	cur.execute(command)
 	conn.commit()
 	return render_template('salaryUpdate.html')
