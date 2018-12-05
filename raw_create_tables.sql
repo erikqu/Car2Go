@@ -30,7 +30,7 @@ CREATE TABLE Models (
   style varchar(10),
   bid char(4) NOT NULL,
   PRIMARY KEY (mid),
-  FOREIGN KEY (bid) REFERENCES (Brands)
+  FOREIGN KEY (bid) REFERENCES Brands (bid)
 );
 
 CREATE TABLE Suppliers (
@@ -55,16 +55,16 @@ CREATE TABLE Supply (
   sid char(4),
   partId char(4),
   PRIMARY KEY (sid, partId),
-  FOREIGN KEY (sid) REFERENCES (Suppliers),
-  FOREIGN KEY (partId) REFERENCES (Parts)
+  FOREIGN KEY (sid) REFERENCES Suppliers (sid),
+  FOREIGN KEY (partId) REFERENCES Parts (partId)
 );
 
 CREATE TABLE Plant_supply (
   pid char(4) NOT NULL,
   partId char(4) NOT NULL,
   PRIMARY KEY (pid, partId),
-  FOREIGN KEY (pid) REFERENCES (Plants),
-  FOREIGN KEY (partId) REFERENCES (Parts)
+  FOREIGN KEY (pid) REFERENCES Plants (pid),
+  FOREIGN KEY (partId) REFERENCES Parts (partId)
 );
 
 CREATE TABLE Dealers (
@@ -90,11 +90,11 @@ CREATE TABLE Vehicles (
   mid char(4) NOT NULL,
   did char(4) NOT NULL,
   PRIMARY KEY (vin),
-  FOREIGN KEY (pid) REFERENCES (Plants),
-  FOREIGN KEY (oid) REFERENCES (Options),
-  FOREIGN KEY (bid) REFERENCES (Brands),
-  FOREIGN KEY (mid) REFERENCES (Models),
-  FOREIGN KEY (did) REFERENCES (Dealers)
+  FOREIGN KEY (pid) REFERENCES Plants (pid),
+  FOREIGN KEY (oid) REFERENCES Options (oid),
+  FOREIGN KEY (bid) REFERENCES Brands (bid),
+  FOREIGN KEY (mid) REFERENCES Models (mid),
+  FOREIGN KEY (did) REFERENCES Dealers (did)
 );
 
 CREATE TABLE Orders (
@@ -102,15 +102,15 @@ CREATE TABLE Orders (
   cid char(4) NOT NULL,
   vin varchar(17) NOT NULL,
   PRIMARY KEY (did, cid, vin),
-  FOREIGN KEY (did) REFERENCES (Dealers),
-  FOREIGN KEY (cid) REFERENCES (Customers),
-  FOREIGN KEY (vin) REFERENCES (Vehicles)
+  FOREIGN KEY (did) REFERENCES Dealers (did),
+  FOREIGN KEY (cid) REFERENCES Customers (cid),
+  FOREIGN KEY (vin) REFERENCES Vehicles (vin)
 );
 
 CREATE TABLE Model_parts (
   partId char(4),
   mid char(4),
   PRIMARY KEY (partId, mid),
-  FOREIGN KEY (partId) REFERENCES (Parts),
-  FOREIGN KEY (mid) REFERENCES (Models)
+  FOREIGN KEY (partId) REFERENCES Parts (partId),
+  FOREIGN KEY (mid) REFERENCES Models (mid)
 );
