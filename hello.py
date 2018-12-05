@@ -162,7 +162,7 @@ def purchasehistory(name=None, cid=None):
 		#tab="<table style='border:1px solid black'>"
 		cur.execute(command)
 		history=cur.fetchall()
-	return render_template("/templatespurchasehistory.html", name=name, cid=cid, history=history)
+	return render_template("/purchasehistory.html", name=name, cid=cid, history=history)
 
 @app.route('/phoneUpdate/<cid>',methods=['POST'])
 def phoneUpdate(cid=None):
