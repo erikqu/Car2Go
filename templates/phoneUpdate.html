@@ -13,8 +13,11 @@
                 <h3>Enter Your Cid</h3><br>
                 <input type="text" name = "cid">
             <input type="submit">
-            {% if updatefail %}
-            <h2>Could not update!</h2>		
+            {% if fail %}
+            <h2>Could not update! Invalid CID!</h2>		
+            {% endif %}
+			{% if worked %}
+            <h2>Phone successfully updated!</h2>
             {% endif %}
         </form>
         </body>
