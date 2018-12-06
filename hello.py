@@ -246,6 +246,16 @@ def showSalaryUpdate(fail = None, worked= None ):
 	# except:
 	# 	return render_template('account.html')
 	
-
+@app.route('/deleteAccount', methods=['GET'])
+def deleteAccount(cid=None):
+	try:
+		conn = psycopg2.connect("dbname='project' user='postgres' host='localhost' password='root'")
+		cur = conn.cursor()
+		com = '''delete from "Customers" where "cid"='%s';'''%(cid)
+		cur.execute(com) 
+		conn.commit()
+		return render_template('index.html')
+	except:
+		return render_template('index.html')
 if __name__ == "__main__":
 	app.run(debug=True)
